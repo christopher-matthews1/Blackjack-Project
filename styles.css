@@ -1,0 +1,267 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 800px;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  align-self: center;
+  background-color: rgb(27, 75, 27);
+}
+
+.scoreDiv {
+  display: grid;
+  grid-template-columns: 7rem auto;
+}
+
+.scoreText {
+  position: relative;
+  margin: 1rem;
+  height: 3rem;
+  font-size: 40px;
+  font-family: "Cabin", sans-serif;
+  color: rgb(255, 255, 255);
+  user-select: none;
+}
+
+.score {
+  position: relative;
+  margin: 1rem;
+  height: 3rem;
+  font-size: 40px;
+  font-family: "Cabin", sans-serif;
+  color: rgb(255, 255, 255);
+  user-select: none;
+}
+
+.dealersText {
+  position: relative;
+  height: 5rem;
+  font-size: 50px;
+  font-family: "Cabin", sans-serif;
+  color: black;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  grid-auto-flow: column;
+  align-self: center;
+  user-select: none;
+}
+
+.dealersText::after {
+  position: relative;
+  content: attr(data-value);
+  font-size: 2rem;
+  color: white;
+  align-self: center;
+  top: .2rem;
+  left: 1rem;
+}
+.playersTextbox {
+  display: grid;
+  grid-template-columns: minmax(26%, auto) 112px 160px 112px minmax(26%, auto);
+}
+
+.playersScore {
+  position: relative;
+  height: 5rem;
+  font-size: 2rem;
+  font-family: "Cabin", sans-serif;
+  color: white;
+  display: grid;
+  text-align: center;
+  align-content: center;
+  grid-auto-flow: column;
+  user-select: none;
+}
+
+.potDiv {
+  display: grid;
+  grid-template-columns: minmax(400px, auto) minmax(400px, auto);
+}
+
+.pot,
+.playersScore.left,
+.playersResult.left {
+  justify-content: right;
+}
+
+.potValue,
+.playersScore.right,
+.playersResult.right {
+  justify-content: left;
+}
+
+.playersResult {
+  padding: 0 35px;
+  position: relative;
+  height: 5rem;
+  font-size: 2.5rem;
+  font-weight: bold;
+  font-family: "Cabin", sans-serif;
+  color: rgb(0, 0, 0);
+  display: grid;
+  align-content: center;
+  grid-auto-flow: column;
+  user-select: none;
+}
+
+.playersText {
+  position: relative;
+  width: 100%;
+  height: 5rem;
+  font-size: 50px;
+  font-family: "Cabin", sans-serif;
+  color: black;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  grid-auto-flow: column;
+  align-self: center;
+  user-select: none;
+}
+
+.dealersHand,
+.playersHand,
+.gapP {
+  height: 13rem;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  grid-auto-flow: column;
+  user-select: none;
+}
+
+.pot,
+.potValue {
+  padding: 5px;
+  height: 4rem;
+  color: white;
+  font-size: 2em;
+  font-family: "Cabin", sans-serif;
+  display: grid;
+  align-content: center;
+  user-select: none;
+}
+
+.gapP {
+  display: none;
+}
+
+.gapP.show {
+  width: 125px;
+  height: 174px;
+  align-content: center;
+  display: block;
+}
+
+
+img {
+  max-height: 100%;
+  pointer-events: none;
+}
+
+.card {
+  position: relative;
+  width: 120px;
+  height: 174px;
+  border: 1px solid black;
+  border-radius: 5%;
+  background: white;
+  overflow: hidden;
+}
+
+.splitCardImage {
+  width: 60px;
+  object-fit: scale-down;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.buttonDiv {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.buttonColumn,
+.betsColumn {
+  position: relative;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.button {
+margin: 0;
+padding: 0;
+width: 4rem;
+height: 3rem;
+font-family: "Cabin", sans-serif;
+align-items: center;
+justify-content: center;
+font-size: 1em;
+font-weight: bold;
+}
+
+.buttonRow,
+.betsRow {
+display: grid;
+height: 3rem;
+grid-template-columns: minmax(33%,auto) 272px minmax(33%,auto);
+}
+
+.bet {
+  font-size: 3rem;
+  font-family: "Cabin", sans-serif;
+}
+
+.bet.left,
+.bet.right {
+  color: white;
+  padding: 0 5.5rem;
+}
+
+.bet.left {
+  text-align: right;
+
+}
+.bet.right {
+  text-align: left;
+}
+
+
+#betButton,
+#restartButton {
+  width: 12rem
+}
+
+#backOfCard,
+#hitButton,
+#standButton,
+#doubleDownButton,
+#restartButton,
+#betButton,
+#splitButton,
+#bet50Button,
+#bet100Button,
+#bet200Button {
+  display: none;
+}
+
+#backOfCard.show,
+#hitButton.show,
+#standButton.show,
+#doubleDownButton.show,
+#restartButton.show,
+#betButton.show,
+#splitButton.show,
+#bet50Button.show,
+#bet100Button.show,
+#bet200Button.show {
+  display: flex;
+}
