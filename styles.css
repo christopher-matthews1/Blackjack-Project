@@ -6,7 +6,9 @@
 
 body {
   margin: 0;
+  font-family: "Cabin", sans-serif;
   min-width: 800px;
+  max-width: 1000px;
   justify-content: center;
   align-content: center;
   align-items: center;
@@ -14,9 +16,17 @@ body {
   background-color: rgb(27, 75, 27);
 }
 
+#container {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+}
+
 .scoreDiv {
+  position: relative;
   display: grid;
-  grid-template-columns: 7rem auto;
+  grid-template-columns: 7rem auto 25%;
 }
 
 .scoreText {
@@ -24,7 +34,6 @@ body {
   margin: 1rem;
   height: 3rem;
   font-size: 40px;
-  font-family: "Cabin", sans-serif;
   color: rgb(255, 255, 255);
   user-select: none;
 }
@@ -34,16 +43,22 @@ body {
   margin: 1rem;
   height: 3rem;
   font-size: 40px;
-  font-family: "Cabin", sans-serif;
   color: rgb(255, 255, 255);
   user-select: none;
+}
+
+.highScores {
+  margin: 1rem;
+  font-size: 20px;
+  height: 4rem;
+  line-height: 1.15;
+  color: rgb(255, 255, 255);
 }
 
 .dealersText {
   position: relative;
   height: 5rem;
   font-size: 50px;
-  font-family: "Cabin", sans-serif;
   color: black;
   display: grid;
   justify-content: center;
@@ -71,7 +86,6 @@ body {
   position: relative;
   height: 5rem;
   font-size: 2rem;
-  font-family: "Cabin", sans-serif;
   color: white;
   display: grid;
   text-align: center;
@@ -82,16 +96,16 @@ body {
 
 .potDiv {
   display: grid;
-  grid-template-columns: minmax(400px, auto) minmax(400px, auto);
+  grid-template-columns: minmax(360px, auto) 80px minmax(360px, auto);
 }
 
-.pot,
+.potValueLeft,
 .playersScore.left,
 .playersResult.left {
   justify-content: right;
 }
 
-.potValue,
+.potValueRight,
 .playersScore.right,
 .playersResult.right {
   justify-content: left;
@@ -103,7 +117,6 @@ body {
   height: 5rem;
   font-size: 2.5rem;
   font-weight: bold;
-  font-family: "Cabin", sans-serif;
   color: rgb(0, 0, 0);
   display: grid;
   align-content: center;
@@ -116,7 +129,6 @@ body {
   width: 100%;
   height: 5rem;
   font-size: 50px;
-  font-family: "Cabin", sans-serif;
   color: black;
   display: grid;
   justify-content: center;
@@ -138,15 +150,19 @@ body {
 }
 
 .pot,
-.potValue {
+.potValueRight,
+.potValueLeft {
   padding: 5px;
   height: 4rem;
   color: white;
   font-size: 2em;
-  font-family: "Cabin", sans-serif;
   display: grid;
   align-content: center;
   user-select: none;
+}
+.potText {
+  color: black;
+  justify-content: center;
 }
 
 .gapP {
@@ -201,7 +217,6 @@ margin: 0;
 padding: 0;
 width: 4rem;
 height: 3rem;
-font-family: "Cabin", sans-serif;
 align-items: center;
 justify-content: center;
 font-size: 1em;
@@ -212,27 +227,23 @@ font-weight: bold;
 .betsRow {
 display: grid;
 height: 3rem;
-grid-template-columns: minmax(33%,auto) 272px minmax(33%,auto);
+grid-template-columns: minmax(264px, auto) 272px minmax(264px, auto);
 }
 
 .bet {
   font-size: 3rem;
-  font-family: "Cabin", sans-serif;
 }
 
 .bet.left,
 .bet.right {
   color: white;
-  padding: 0 5.5rem;
 }
 
-.bet.left {
-  text-align: right;
-
-}
+.bet.left,
 .bet.right {
-  text-align: left;
+  text-align: center;
 }
+
 
 
 #betButton,

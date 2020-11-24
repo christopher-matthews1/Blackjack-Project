@@ -1,5 +1,5 @@
 // const for every card (52) or const values (13) and const suits (4)
-//? IMAGE LINKS---------------------------------------------------------
+//? HTML IMAGE GRABS---------------------------------------------------------
 const dealersCardLeftImage = document.getElementById("dealers-card-left-image");
 const dealersCardRightImage = document.getElementById(
   "dealers-card-right-image"
@@ -8,11 +8,11 @@ const playersCardLeftImage = document.getElementById("players-card-left-image");
 const playersCardRightImage = document.getElementById(
   "players-card-right-image"
 );
+//? HTML DIV GRABS -----------------------------------------------------------
 const playersHand = document.getElementById("players-hand");
 const dealersHand = document.getElementById("dealers-hand");
-
-//? HTML GRABS -----------------------------------------------------------
 const playerText = document.getElementById("playersText");
+const dealersText = document.getElementById("dealersText");
 const playersCardLeft = document.getElementById("players-card-left");
 const playersCardRight = document.getElementById("players-card-right");
 const backOfCard = document.getElementById("backOfCard");
@@ -23,13 +23,11 @@ const scoreRight = document.getElementById("scoreRight");
 const betLeft = document.getElementById("betLeft");
 const betRight = document.getElementById("betRight");
 const score = document.getElementById("score");
-const pot = document.getElementById("potValue");
+const highScores = document.getElementById("highScores");
+const potLeft = document.getElementById("potValueLeft");
+const potRight = document.getElementById("potValueRight");
 const gapP = document.getElementById("gapP");
-
-
-
 //? BUTTON LINKS-----------------------------------------------------------
-const dealersText = document.getElementById("dealersText");
 const restartButton = document.getElementById("restartButton");
 const hitButton = document.getElementById("hitButton");
 const standButton = document.getElementById("standButton");
@@ -44,7 +42,7 @@ restartButton.addEventListener("click", loadGame);
 hitButton.addEventListener("click", hit);
 standButton.addEventListener("click", stand);
 betButton.addEventListener("click", deal);
-//splitButton.addEventListener("click", split);
+splitButton.addEventListener("click", split);
 bet50Button.addEventListener("click", bet50);
 bet100Button.addEventListener("click", bet100);
 bet200Button.addEventListener("click", bet200);
@@ -53,60 +51,21 @@ doubleDownButton.addEventListener("click", doubleDown);
 let obj = {
   currentCards: [],
   playersCards: [],
+  playersSplitCards: [],
   dealersCards: []
 };
-//? LOAD GAME
+//? LOAD GAME-----------------------------------------------------------
 loadGame();
-//? FUNCTIONS
-function sleep(miliseconds) {
-  var currentTime = new Date().getTime();
-
-  while (currentTime + miliseconds >= new Date().getTime()) {
-  }
-}
-
-function saveLocalHighScore(playerName, playerScore) {
-  if (localStorage.getItem("High Scores") === null) {
-    obj.highScores = [];
-  } else {
-    obj.highScores = JSON.parse(localStorage.getItem("High Scores"));
-  }
-  if (removeLowerHighScore(playerName, playerScore)) {
-    //obj.highScores.push({'playerName': playerName, 'highScore': +playerScore})
-    obj.highScores.push((playerName + ": " + playerScore))
-    localStorage.setItem("High Scores", JSON.stringify(obj.highScores));
-  }
-}
-
-function removeLowerHighScore(playerName, playerScore) {
-  //If Player has a high score in the array
-  let playerInLocalStorage = obj.highScores.find(highScore =>highScore.includes(playerName));
-  //If Players current score is more than previous high score
-  if (playerInLocalStorage){
-    if (+(playerInLocalStorage.slice(-4)) < playerScore) {
-      let index = obj.highScores.indexOf(playerInLocalStorage);
-      //Splice previous high score
-      obj.highScores.splice(index, 1);
-      return true;
-    }
-    return false;
-  }
-  return true;
-}
-
-
-
-
-
 //? LOAD AND START GAME--------------------------------------------------------
 function loadGame() {
   //localStorage.clear()
+  getLocalHighScores()
+  setHighScoresHTML()
   resetVariables()
   resetText();
   addBetButtons();
   removeAllPlayButtons()
-  //gapP.classList.remove("show");
-  restartButton.classList.remove("show");
+  refreshStartOfGame()
   setBetButton(true)
   setScore();
   resetCards();
@@ -115,26 +74,33 @@ function loadGame() {
 function getSetPlayerName() {
   if (playerText.innerHTML === "") {
     let playerName = prompt("Enter your 3 initials","");
-    playerName = playerName.substr(0, 3);
-    if (playerName !== null) {
+    if (playerName) {
+      //Makes initials upper case and limits to 3
+      playerName = playerName.toUpperCase();
+      playerName = playerName.substr(0, 3);
       playerText.innerHTML = playerName;
+    } else {
+      //Defaults name to --- if nothing is put
+      playerText.innerHTML = "---";
     }
   }
 }
 function deal() {
   addAllPlayButtons();
   addBackOfCard()
-  setPot()
+  setPotRight()
   subtractBetFromScore()
   removeBetButtons()
+  removeBetText()
+  console.log('Score After Bet:'+score.innerText)
   startCards("players", "left");
   startCards("dealers", "left");
   startCards("players", "right");
-  //checkForSplit()
+  checkForSplit()
   if(startCards("dealers", "right")) {
     return;
   }
-  playerHas21();
+  playerRightHasEqualOrOver21();
   buttonDelay();
 }
 function startCards(who, where) {
@@ -183,12 +149,13 @@ function insuranceCheck(newCard, who) {
       obj.aceD = 1;
       obj.dTurn = 1;
       checkForAce(obj.playersCards, "players");
-      checkFinish(obj.playersTotal, obj.dealersTotal);
+      checkFinishRight(obj.playersTotal, obj.dealersTotal);
       return true;
     }
   }
 }
 function checkForSplit() {
+  //Checks to see if the left and right card is the same card
   let x = obj.playersCards[0].slice(0, -1);
   let y = obj.playersCards[1].slice(0, -1);
   if (x === y) {
@@ -213,34 +180,48 @@ function resetCards() {
 function resetText() {
   dealersText.dataset.value = "";
   scoreRight.innerText = "";
+  scoreLeft.innerText = "";
   resultRight.innerText = "";
+  resultLeft.innerText = "";
   betRight.innerText = "";
-  pot.innerText = "";
+  betLeft.innerText = "";
+  potRight.innerText = "";
+  potLeft.innerText = "";
 }
 function resetVariables() {
   obj.currentCards = [];
   obj.playersCards = [];
+  obj.playersSplitCards = [];
   obj.dealersCards = [];
   obj.playersTotal = 0;
   obj.dealersTotal = 0;
+  obj.betLeft = 0;
+  obj.split = 0;
+  obj.hit = 0;
+  obj.stand = 0;
+  obj.doubleDown = 0;
   obj.aceD = 0;
   obj.dTurn = 0;
-  obj.gameEnd = 0;
+  obj.endRight = 0;
+}
+function removeBetText() {
+  betRight.innerText = "";
+  betLeft.innerText = "";
 }
 //? BETS/POT-------------------------------------------------------------------
 function bet50() {
   betRight.innerText = 50;
-  obj.bet = 50;
+  obj.betRight = 50;
   setBetButton(false);
 }
 function bet100() {
   betRight.innerText = 100;
-  obj.bet = 100;
+  obj.betRight = 100;
   setBetButton(false);
 }
 function bet200() {
   betRight.innerText = 200;
-  obj.bet = 200;
+  obj.betRight = 200;
   setBetButton(false);
 }
 function setBetButton(x) {
@@ -258,22 +239,40 @@ function removeBetButtons() {
   bet50Button.classList.remove("show");
   bet100Button.classList.remove("show");
   bet200Button.classList.remove("show");
-  betRight.innerText = "";
 }
 function subtractBetFromScore() {
-  score.innerText -= obj.bet;
+  score.innerText -= obj.betRight;
 }
-//function doubleBet() {
- // betRight.innerText = +betRight.innerText * 2;
-//}
-function setPot() {
-  pot.innerText = obj.bet;
+function setPotRight() {
+  potRight.innerText = obj.betRight;
+}
+function setPotLeft() {
+  potLeft.innerText = obj.betRight;
+}
+function addDoubleDownToBet() {
+  //If SPLIT is on left hand and DD is pressed, left bet doubles
+  if (obj.split === 1) {
+    obj.betLeft *= 2
+  //Else, right hand doubles
+  } else {
+    obj.betRight *= 2
+  }
 }
 function addDoubleDownToPot() {
-  pot.innerText = +pot.innerText + obj.bet;
+  if (obj.split === 1) {
+    potLeft.innerText = +potLeft.innerText + obj.betLeft;
+  } else {
+    potRight.innerText = +potRight.innerText + obj.betRight;
+  }
 }
-//? HIT/STAND/ETC-------------------------------------------------------------
+//? HIT/STAND-----------------------------------------------------------------
 function hit() {
+  if(hitSplitLeft()){
+    return;
+  }
+  //Checks if SPLIT is current on RIGHT hand
+  hitSplitRight()
+  splitButton.classList.remove("show");
   doubleDownButton.classList.remove("show");
   createPlayersNewCardDivHTML();
   createPlayersNewCardImageHTML();
@@ -284,29 +283,160 @@ function hit() {
   setCardValue(obj.newCardValue, "players");
   checkForAce(obj.playersCards, "players");
   checkBustButtonRemoval();
-  buttonDelay();
-  if(playerHas21()) {
+  if (playerRightHasEqualOrOver21()) {
     return;
   }
+  buttonDelay();
+  checkSplitDoubleBust();
   checkEndPlayerRight();
 }
 function stand() {
-  removeAllPlayButtons()
-  removeBackOfCard()
-  obj.dTurn = 1;
-  AddFacedownCardToTotal()
-  checkForAce(obj.playersCards, "players");
-  checkEndPlayerRight();
+  //For Split: Checks if the first hand has been finished
+  obj.stand = 1;
+  //For Split: Resets hit for card drawing to be accurate
+  obj.hit = 0;
+  if (obj.split !== 1) {
+    obj.dTurn = 1;
+    removeAllPlayButtons()
+    removeBackOfCard()
+    AddFacedownCardToTotal()
+    checkForAce(obj.playersCards, "players");
+    checkEndPlayerRight();
+  } 
+  else {
+    obj.split = 2;
+    checkForAceSplit(obj.playersSplitCards)
+    hit();
+    if (obj.playersTotal < 21) {
+      doubleDownButton.classList.add('show');
+    }
+    buttonDelay();
+  }
 }
+//? SPLIT--------------------------------------------------------------------
+function split() {
+  obj.split = 1;
+  //Add split bet to pot
+  setPotLeft()
+  //Subtract split bet from score
+  subtractBetFromScore()
+  console.log('Score After Split:'+score.innerText)
+  splitButton.classList.remove("show");
+  //Add gap between cards
+  gapP.classList.add("show");
+  //Move left card to the splitCards array
+  obj.playersSplitCards.push(obj.playersCards.shift());
+  //Set totals to the value of one split card
+  splitPlayerTotal()
+  setSplitTextTotalAndBet()
+  //Automatically Hit
+  hitSplitLeft()
+}
+function hitSplitLeft() {
+  if (obj.split === 1) {
+    //After first hit, split the 'last hit' card in half when a new one is drawn
+    if (obj.hit === 1) {
+      obj.playersSplitCardDivHTML = document.getElementById("players-new-card");
+      obj.playersSplitCardDivHTML.classList.add("splitCardImage");
+      obj.playersSplitCardDivHTML.removeAttribute("id");
+      if (obj.doubleDown === 0) {
+        doubleDownButton.classList.remove('show');
+      }
+    }
+    obj.hit = 1;
+    createPlayersNewCardDivHTML();
+    createPlayersNewCardImageHTML();
+    //Insert the new SPLIT card to the left of the "GAP"
+    playersHand.insertBefore(obj.playersNewCardDivHTML, gapP);
+    //Cuts the card left of the new card in half
+    playersCardLeft.classList.add("splitCardImage");
+    //Append Image to Div
+    obj.playersNewCardDivHTML.appendChild(obj.playersNewCardImageHTML);
+    //Finds random card and sets it to the image
+    createPlayersNewCard();
+    //Adds SPLIT card to the SPLIT hand of cards
+    obj.playersSplitCards.push(obj.newCard);
+    //Gets value of card
+    getCardValueDigit()
+    //Sets value of card to split total
+    setSplitCardValue(obj.newCardValue, "players");
+    //Checks SPLIT hand for ACES
+    checkForAceSplit(obj.playersSplitCards)
+    //Check right hand for ACE to show 1 or 11 while SPLIT hand plays
+    checkForAce(obj.playersCards, "players");
+    buttonDelay();
+    //If SPLIT hand is equal or over 21, automatically stand
+    playerLeftHasEqualOrOver21()
+    splitButton.classList.remove("show");
+    return true;
+  }
+}
+function hitSplitRight() {
+  if (obj.split === 2) {
+    obj.playersSplitCardDivHTML = document.getElementById("players-new-card");
+    //After first hit, split the 'last hit' card in half when a new one is drawn
+    if(obj.hit === 1) {
+      obj.playersSplitCardDivHTML.classList.add("splitCardImage");
+    }
+    obj.hit = 1;
+    obj.playersSplitCardDivHTML.removeAttribute("id");
+    playersCardRight.classList.add("splitCardImage");
+  }
+}
+function splitPlayerTotal() {
+  obj.playersTotal /= 2;
+}
+function setSplitTextTotalAndBet() {
+  obj.betLeft = obj.betRight
+  scoreRight.innerText = obj.playersTotal;
+  obj.playersSplitTotal = obj.playersTotal;
+}
+function checkSplitDoubleBust() {
+  if (obj.split === 2) {
+    if(obj.playersTotal > 21) {
+      if(obj.playersSplitTotal > 21) {
+      } else {
+        stand();
+      }
+    }
+  }
+}
+//? DOUBLEDOWN----------------------------------------------------------------
 function doubleDown() {
   subtractBetFromScore();
-  //doubleBet();
+  console.log('Score After DD:'+score.innerText)
   addDoubleDownToPot();
-  removeAllPlayButtons();
+  addDoubleDownToBet();
+  if (doubleDownLeft()) {
+  } else {
+    doubleDownRight();
+  }
+}
+function doubleDownLeft() {
+  if (obj.split === 1) {
+    obj.doubleDown = 1;
+    hit();
+    //If player didn't BUST, auto stand:
+    if (obj.playersSplitTotal < 21) {
+      setTimeout(stand, 500)
+    }
+    return true;
+  }
+}
+function doubleDownRight() {
   hit();
-  if (obj.playersTotal < 21) {
+  removeAllPlayButtons();
+  //If player didn't BUST, auto stand:
+  if(obj.playersTotal < 21) {
     setTimeout(stand, 500)
   }
+}
+//? DEALER TURN--------------------------------------------------------------
+function AddFacedownCardToTotal() {
+  //Adds value of Dealers facedown card to total, checking for ace
+  obj.newCardValue = obj.dealersCards[0].slice(0, -1);
+  setCardValue(obj.newCardValue, "dealers");
+  checkForAce(obj.dealersCards, "dealers");
 }
 function dealersHit() {
   createDealersNewCardDivHTML();
@@ -318,12 +448,6 @@ function dealersHit() {
   setCardValue(obj.newCardValue, "dealers");
   checkForAce(obj.dealersCards, "dealers");
   checkEndPlayerRight();
-}
-function AddFacedownCardToTotal() {
-  //Adds value of Dealers facedown card to total, checking for ace
-  obj.newCardValue = obj.dealersCards[0].slice(0, -1);
-  setCardValue(obj.newCardValue, "dealers");
-  checkForAce(obj.dealersCards, "dealers");
 }
 //? CREATE PLAYERS NEW CARDS----------------------------------------------------
 function createPlayersNewCardDivHTML() {
@@ -374,7 +498,7 @@ function pushDealersNewCardToHand() {
 //? GET AND SET RANDOM CARDS----------------------------------------------------
 function getRandomCard() {
   // set a random card to newCard variable
-  const valueSet = "1234567890JQK";
+  const valueSet = "123K";
   const suitSet = "CDSH";
   const value = valueSet[Math.floor(Math.random() * valueSet.length)];
   const suit = suitSet[Math.floor(Math.random() * suitSet.length)];
@@ -403,6 +527,19 @@ function setCardValue(newCardValue, who) {
       return (obj.playersTotal += +newCardValue);
     } else {
       return (obj.playersTotal += 10);
+    }
+  } else if (newCardValue > 0) {
+    return (obj.dealersTotal += +newCardValue);
+  } else {
+    return (obj.dealersTotal += 10);
+  }
+}
+function setSplitCardValue(newCardValue, who) {
+  if (who === "players") {
+    if (newCardValue > 0) {
+      return (obj.playersSplitTotal += +newCardValue);
+    } else {
+      return (obj.playersSplitTotal += 10);
     }
   } else if (newCardValue > 0) {
     return (obj.dealersTotal += +newCardValue);
@@ -463,6 +600,40 @@ function checkForAce(arr, who) {
     }
   }
 }
+function checkForAceSplit(arr) {
+  let regex = RegExp("1");
+  for (let i = 0; i < arr.length; i++) {
+    if (regex.test(arr[i])) {
+      // CHECK IF PLAYERS TOTAL IS FINAL
+      if (obj.stand === 0) {
+        // CHECK IF PLAYER WOULD BE BUST
+        if (obj.playersSplitTotal + 10 > 21) {
+          updateSplitTotalText()
+          // Check if Player has a CHOICE for ACE total
+        } else if (obj.playersSplitTotal + 10 < 21) {
+          scoreLeft.innerText =
+            obj.playersSplitTotal + " or " + (obj.playersSplitTotal + 10);
+          // Check if Player HAS 21 with ACE, if so USE IT!
+        } else {
+          obj.playersSplitTotal += 10;
+          updateSplitTotalText()
+        }
+        return;
+        // After STAND, check if could use +10, if so USE IT!
+      } else if (obj.playersSplitTotal + 10 <= 21) {
+        obj.playersSplitTotal += 10;
+        updateSplitTotalText()
+        // After STAND, if not, don't
+      } else {
+        updateSplitTotalText()
+      }
+      return;
+      // Player DOES NOT have ACE
+    } else {
+      updateSplitTotalText()
+    }
+  }
+}
 function updateDealerTotalWithAce() {
   obj.dealersTotal += 10;
   dealersText.dataset.value = obj.dealersTotal;
@@ -475,15 +646,21 @@ function updateTotalText(who) {
     dealersText.dataset.value = obj.dealersTotal;
   }
 }
-//? BUTTON: SHOW/HIDE/REMOVE/ETC------------------------------------------------
+function updateSplitTotalText() {
+    scoreLeft.innerText = obj.playersSplitTotal;
+}
+//? BUTTON/ETC: SHOW/HIDE/REMOVE/ETC------------------------------------------------
 function buttonDelay() {
+  //Delays the buttons so a double click doesn't happen
   standButton.disabled = true;
   hitButton.disabled = true;
   doubleDownButton.disabled = true;
+  splitButton.disabled = true;
   setTimeout(() => {
     standButton.disabled = false;
     hitButton.disabled = false;
     doubleDownButton.disabled = false;
+    splitButton.disabled = false;
   }, 500);
 }
 function checkBustButtonRemoval() {
@@ -510,15 +687,94 @@ function removeBackOfCard() {
 function addBackOfCard() {
   backOfCard.classList.add("show");
 }
+function refreshStartOfGame() {
+  gapP.classList.remove("show");
+  restartButton.classList.remove("show");
+  playersCardLeft.classList.remove("splitCardImage");
+  playersCardRight.classList.remove("splitCardImage");
+}
+//? HIGH SCORES-----------------------------------------------------------------
+function setHighScoresHTML() {
+  //Check to see if there is even a high score list
+  if(obj.highScores) {
+    //Show the TOP 5 high scores on the page
+    for (let i = 0; i < 5; i++) {
+      //If there are NOT 5 scores, stop at last one
+      if (obj.highScores[i]) {
+        highScores.innerHTML = highScores.innerHTML + "<br>" + obj.highScores[i];
+      }
+    }
+  }
+}
+function getLocalHighScores() {
+  highScores.innerHTML = "Top 5 High Scores:";
+  //If High scores array is not created, create it
+  if (localStorage.getItem("High Scores") === null) {
+    obj.highScores = [];
+    //If is it, populate it with the current high scores.
+  } else {
+    obj.highScores = JSON.parse(localStorage.getItem("High Scores"));
+  }
+}
+function saveLocalHighScore(playerName, playerScore) {
+  //If current player has a high score that is more than current score, pass on function
+  if (removeLowerHighScore(playerName, playerScore)) {
+    //Possible object way to do high scores:
+    //obj.highScores.push({'playerName': playerName, 'highScore': +playerScore})
+    sortHighScores(playerName, playerScore)
+    localStorage.setItem("High Scores", JSON.stringify(obj.highScores));
+  }
+}
+function removeLowerHighScore(playerName, playerScore) {
+  //If Player has a high score in the array
+  let playerInLocalStorage = obj.highScores.find(highScoresArray =>highScoresArray.includes(playerName));
+  //If Players current score is more than previous high score
+  if (playerInLocalStorage){
+    if (+(playerInLocalStorage.slice(-4)) < playerScore) {
+      let index = obj.highScores.indexOf(playerInLocalStorage);
+      //Splice previous high score
+      obj.highScores.splice(index, 1);
+      return true;
+    }
+    return false;
+  }
+  return true;
+}
+function sortHighScores(playerName, playerScore) {
+  //Find index of the highest score that is below the current score
+  indexOfScoreGreater = obj.highScores.findIndex(function(highScore) {
+    return +(highScore.slice(-4)) < playerScore
+  });
+  //If there is NO score high, make this the HIGH score
+  if (indexOfScoreGreater === -1) {
+    obj.highScores.push((playerName + ": " + playerScore))
+  //Else, place the current score at the index of the score under it
+  } else {
+    obj.highScores.splice((indexOfScoreGreater), 0, (playerName + ": " + playerScore));
+  }
+}
 //? CHECK FINISHES--------------------------------------------------------------
-function checkFinish(p, d) {
-  if (lost(p, d)) {
+function checkFinishRight(p, d) {
+  if (lostRight(p, d)) {
     return;
-  } else if (checkBlackjack(p, d)) {
+  } else if (checkBlackjackRight(p, d)) {
     return;
-  } else if (won(p, d)) {
+  } else if (wonRight(p, d)) {
     return;
-  } else if (push(p, d)) {
+  } else if (pushRight(p, d)) {
+    return;
+  } else if (obj.dTurn === 1) {
+    setTimeout(dealersHit(), 1000);
+  }
+}
+function checkFinishLeft(p, d) {
+  if (lostLeft(p, d)) {
+    return;
+  } else if (checkBlackjackLeft(p, d)) {
+    return;
+  } else if (wonLeft(p, d)) {
+    return;
+  } else if (pushLeft(p, d)) {
     return;
   } else if (obj.dTurn === 1) {
     setTimeout(dealersHit(), 1000);
@@ -526,46 +782,124 @@ function checkFinish(p, d) {
 }
 function checkEndPlayerRight() {
   setTimeout(function () {
-    checkFinish(obj.playersTotal, obj.dealersTotal);
+    checkFinishRight(obj.playersTotal, obj.dealersTotal);
   }, 500);
 }
-function playerHas21() {
+function checkEndPlayerLeft() {
+  if (obj.playerTotal > 21) {
+    setTimeout(function () {
+      checkFinishLeft(obj.playersSplitTotal, obj.dealersTotal);
+    }, 500);
+  } else {
+    checkFinishLeft(obj.playersSplitTotal, obj.dealersTotal)
+  }
+}
+function playerRightHasEqualOrOver21() {
+  //If player busts, automatically check finish without dealer flipping card.
+ // if (obj.playersTotal > 21) {
+   // checkEndPlayerRight()
+   // return true;
+  //If player has 21, automatically stand
+  //} else 
   if (obj.playersTotal === 21) {
     stand();
     return true;
   }
 }
+function playerLeftHasEqualOrOver21() {
+  //If player has over 21, automatically stand
+  if (obj.playersSplitTotal >= 21) {
+    stand();
+    return true;
+  }
+}
 //? FINISH OPTIONS--------------------------------------------------------------
-function lost(p, d) {
+function lostRight(p, d) {
   if (checkLostCondition(p, d)) {
-    splitRightLoss()
+    if (obj.endRight === 0) {
+      splitRightLoss()
+      obj.dTurn = 1;
+    }
+    if (obj.split === 2) {
+      checkEndPlayerLeft()
+    }
+    saveLocalHighScore(playerText.innerHTML, score.innerText);
+    removeAllPlayButtons()
     restartButton.classList.add("show");
+    return true;
+  }
+}
+function lostLeft(p, d) {
+  if (checkLostCondition(p, d)) {
+    splitLeftLoss()
     saveLocalHighScore(playerText.innerHTML, score.innerText);
     return true;
   }
 }
-function checkBlackjack(p, d) {
-  if (checkBlackjackCondition(p, d)) {
-    splitRightBlackjack()
+function checkBlackjackRight(p, d) {
+  if (checkBlackjackRightCondition(p, d)) {
+    if (obj.endRight === 0) {
+      splitRightBlackjack()
+    }
+    if (obj.split === 2) {
+      checkEndPlayerLeft()
+    }
+    saveLocalHighScore(playerText.innerHTML, score.innerText);
+    removeAllPlayButtons()
     restartButton.classList.add("show");
+    return true;
+  }
+}
+function checkBlackjackLeft(p, d) {
+  if (checkBlackjackLeftCondition(p, d)) {
+    splitLeftBlackjack()
     saveLocalHighScore(playerText.innerHTML, score.innerText);
     return true;
   }
 }
-function won(p, d) {
+function wonRight(p, d) {
   // If dealer busts || player > dealer with 17+ || player > dealer with ace and 18+
   if (checkWinCondition(p, d)) {
-    splitRightWin()
+    if (obj.endRight === 0) {
+      splitRightWin()
+    }
+    if (obj.split === 2) {
+      checkEndPlayerLeft()
+    }
+    saveLocalHighScore(playerText.innerHTML, score.innerText);
+    removeAllPlayButtons()
+    restartButton.classList.add("show");
+    return true;
+  }
+}
+function wonLeft(p, d) {
+  // If dealer busts || player > dealer with 17+ || player > dealer with ace and 18+
+  if (checkWinCondition(p, d)) {
+    splitLeftWin()
     restartButton.classList.add("show");
     saveLocalHighScore(playerText.innerHTML, score.innerText);
     return true;
   }
 }
-function push(p, d) {
+function pushRight(p, d) {
   // If dealer with 17+ ties player || dealer with ace and 18+ ties player
   if (checkPushCondition(p, d)) {
-    splitRightPush()
+    if (obj.endRight === 0) {
+      splitRightPush()
+    }
+    if (obj.split === 2) {
+      checkEndPlayerLeft()
+    }
+    saveLocalHighScore(playerText.innerHTML, score.innerText);
+    removeAllPlayButtons()
     restartButton.classList.add("show");
+    return true;
+  }
+}
+function pushLeft(p, d) {
+  // If dealer with 17+ ties player || dealer with ace and 18+ ties player
+  if (checkPushCondition(p, d)) {
+    splitLeftPush()
     saveLocalHighScore(playerText.innerHTML, score.innerText);
     return true;
   }
@@ -578,29 +912,65 @@ function checkLostCondition(p, d) {
   } 
   //If Dealers Turn:
   else if (obj.dTurn === 1) {
-    //If Dealer is not bust and has more than Player:
-    if (d > p && d <= 21) {
-      return true;
+    //If Dealer is not bust:
+    if (d <= 21 && d > p && d > 16) {
+      //If Dealer is more than player:
+      if (d > p) {
+        //If Dealer is more than 16 without +10:
+        if (d > 16) {
+          return true;
+        }
+      }
     } 
     //If Dealer has Ace:
-    else if (obj.aceD !== 0) {
+    else if (obj.aceD === 1) {
       //If Dealer with Ace is not bust:
       if (d + 10 <= 21) {
         //If Dealer with Ace is more than Player:
         if (d + 10 > p) {
-          updateDealerTotalWithAce()
-          return true;
+          //If Dealer with Ace is more than 17
+          if (d + 10 > 17) {
+            updateDealerTotalWithAce()
+            return true;
+          }
         }
       }
     }
   }
   return false;
 }
-function checkBlackjackCondition(p, d) {
+function checkBlackjackRightCondition(p, d) {
   //If Player has 21
   if (p === 21){
     //If Players hand has exactly 2 cards
     if (obj.playersCards.length === 2) {
+      //If Dealer has more than 16
+      if (d > 16) {
+        //If Dealer does not have 21
+        if (d !== p) {
+          return true;
+        }
+      }
+      //If Dealer has an Ace
+      else if (obj.aceD !== 0) {
+        //If Dealer with Ace has more than 17
+        if (d + 10 > 17) {
+          //If Dealer with Ace does not have 21
+          if (d + 10 < 21) {
+            updateDealerTotalWithAce()
+            return true;
+          }
+        }
+      }
+    }
+  }
+  return false;
+}
+function checkBlackjackLeftCondition(p, d) {
+  //If Player has 21
+  if (p === 21){
+    //If Players hand has exactly 2 cards
+    if (obj.playersSplitCards.length === 2) {
       //If Dealer has more than 16
       if (d > 16) {
         //If Dealer does not have 21
@@ -672,25 +1042,68 @@ function checkPushCondition(p, d) {
 }
 //? END GAME BET WINNING AND TEXT UPDATES
 function splitRightLoss() {
+  console.log('RightLoss: '+score.innerText)
   scoreRight.innerText = obj.playersTotal;
   resultRight.innerText = "Lost!";
   betRight.innerText = "+" + 0;
+  console.log('RightLoss: '+score.innerText)
+  obj.endRight = 1;
 }
 function splitRightBlackjack() {
+  console.log('RightBJ: '+score.innerText)
   resultRight.innerText = "Blackjack!";
-  let betTotal = obj.bet + (3 / 2) * obj.bet;
+  let betTotal = obj.betRight + (3 / 2) * obj.betRight;
   score.innerText = +score.innerText + betTotal;
   betRight.innerText = "+" + betTotal;
+  console.log('RightBJ: '+score.innerText)
+  obj.endRight = 1;
 }
 function splitRightWin() {
+  console.log('RightWin: '+score.innerText)
   scoreRight.innerText = obj.playersTotal;
   resultRight.innerText = "Won!";
-  let betTotal = obj.bet * 2;
+  let betTotal = obj.betRight * 2;
   score.innerText = +score.innerText + betTotal;
   betRight.innerText = "+" + betTotal;
+  console.log('RightWin: '+score.innerText)
+  obj.endRight = 1;
 }
 function splitRightPush() {
+  console.log('RightPush: '+score.innerText)
   resultRight.innerText = "Push!";
-  score.innerText = +score.innerText + obj.bet;
-  betRight.innerText = "+" + obj.bet;
+  score.innerText = +score.innerText + obj.betRight;
+  betRight.innerText = "+" + obj.betRight;
+  console.log('RightPush: '+score.innerText)
+  obj.endRight = 1;
+}
+function splitLeftLoss() {
+  console.log('LeftLoss: '+score.innerText)
+  scoreLeft.innerText = obj.playersSplitTotal;
+  resultLeft.innerText = "Lost!";
+  betLeft.innerText = "+" + 0;
+  console.log('LeftLoss: '+score.innerText)
+}
+function splitLeftBlackjack() {
+  console.log('LeftBJ: '+score.innerText)
+  resultLeft.innerText = "Blackjack!";
+  let betTotal = obj.betLeft + (3 / 2) * obj.betLeft;
+  score.innerText = +score.innerText + betTotal;
+  betLeft.innerText = "+" + betTotal;
+  console.log('LeftBJ: '+score.innerText)
+}
+function splitLeftWin() {
+  console.log('LeftWin: '+score.innerText)
+  scoreLeft.innerText = obj.playersSplitTotal;
+  resultLeft.innerText = "Won!";
+  let betTotal = obj.betLeft * 2;
+  score.innerText = +score.innerText + betTotal;
+  betLeft.innerText = "+" + betTotal;
+  console.log('LeftWin: '+score.innerText)
+}
+function splitLeftPush() {
+  console.log('LeftPush: '+score.innerText)
+  resultLeft.innerText = "Push!";
+  score.innerText = +score.innerText + obj.betLeft;
+  betLeft.innerText = "+" + obj.betLeft;
+  console.log('LeftPush: '+score.innerText)
 }

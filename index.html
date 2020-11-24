@@ -5,78 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Cabin&display=swap" rel="stylesheet">    
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <script src="apps.js" defer></script>
     <title>Blackjack</title>
 </head>
 <body>
-    <div class='scoreDiv'>
-        <div class='scoreText'>Score:</div>
-        <div class='score' id='score'></div>
-    </div>
-    <div class="dealersText" id="dealersText" data-value="">Dealer</div>
-   
-    <div class="dealersHand" id="dealers-hand">
-        <div class="card" id='dealers-card-left'>
-            <img class="cardImage" id='backOfCard' src="/png/back.png">
-            <img class="cardImage" id='dealers-card-left-image' src="">
+    <div id='container'>
+        <div class='scoreDiv'>
+            <div class='scoreText'>Score:</div>
+            <div class='score' id='score'></div>
+            <div class='highScores' id='highScores'></div>
         </div>
-        <div class="gapD" id="gapD"></div>
-        <div class="card" id='dealers-card-right'>
-            <img class="cardImage" id='dealers-card-right-image' src="">
-        </div>
-    </div>
-    <div class="potDiv">
-        <div class="pot">Bets:</div>
-        <div class="pot potValue" id="potValue">400</div>
-    </div>
-    <div class="playersHand" id="players-hand">
-        <div class="card" id="players-card-left">
-            <img class="cardImage" id='players-card-left-image' src="">
-        </div>
-        <div class="gapP" id="gapP"></div>
-        <div class="card" id="players-card-right">
-            <img class="cardImage" id='players-card-right-image'src="">
-        </div>
-    </div>
+        <div class="dealersText" id="dealersText" data-value="">Dealer</div>
     
-    <div class='playersTextbox'>
-        <div class="playersResult left" id='resultLeft' data-result=""></div>   
-        <div class="playersScore left" id='scoreLeft' data-left=""></div>
-        <div class="playersText" id='playersText' data-value="" data-split=""></div>
-        <div class="playersScore right" id='scoreRight' data-right=""></div>
-        <div class="playersResult right" id='resultRight' data-result=""></div>
-    </div>
-    <div class='buttonRow'>
-        <div class='bet betsColumn left' id='betLeft'></div>
-        <div class="buttonDiv buttonColumn">
-            <button id="bet50Button" class="button">50</button>
-            <button id="bet100Button" class="button">100</button>
-            <button id="bet200Button" class="button">200</button>
-            <button id="hitButton" class="button">Hit</button>
-            <button id="standButton"class="button">Stand</button>
-            <button id="splitButton" class="button">Split</button>
-            <button id="doubleDownButton" class="button">Double Down</button>
-            <button id="restartButton" class="button">Restart</button>
+        <div class="dealersHand" id="dealers-hand">
+            <div class="card" id='dealers-card-left'>
+                <img class="cardImage" id='backOfCard' src="/png/back.png">
+                <img class="cardImage" id='dealers-card-left-image' src="">
+            </div>
+            <div class="gapD" id="gapD"></div>
+            <div class="card" id='dealers-card-right'>
+                <img class="cardImage" id='dealers-card-right-image' src="">
+            </div>
         </div>
-        <div class='bet betsColumn right' id='betRight'></div>
-    </div>
-
-    <div class='betsRow'>
-        <div class='betsColumn'></div>
-        <div class="buttonDiv betsColumn">
-            <button id="betButton" class="button">Bet</button>
+        <div class="potDiv">
+            <div class="pot potValueLeft" id="potValueLeft">400</div>
+            <div class="pot potText">Bets</div>
+            <div class="pot potValueRight" id="potValueRight">400</div>
         </div>
-        <div class='betsColumn'></div>
-    </div>
+        <div class="playersHand" id="players-hand">
+            <div class="card" id="players-card-left">
+                <img class="cardImage" id='players-card-left-image' src="">
+            </div>
+            <div class="gapP" id="gapP"></div>
+            <div class="card" id="players-card-right">
+                <img class="cardImage" id='players-card-right-image'src="">
+            </div>
+        </div>
+        
+        <div class='playersTextbox'>
+            <div class="playersResult left" id='resultLeft' data-result=""></div>   
+            <div class="playersScore left" id='scoreLeft' data-left=""></div>
+            <div class="playersText" id='playersText' data-value="" data-split=""></div>
+            <div class="playersScore right" id='scoreRight' data-right=""></div>
+            <div class="playersResult right" id='resultRight' data-result=""></div>
+        </div>
+        <div class='buttonRow'>
+            <div class='bet betsColumn left' id='betLeft'></div>
+            <div class="buttonDiv buttonColumn">
+                <button id="bet50Button" class="button">50</button>
+                <button id="bet100Button" class="button">100</button>
+                <button id="bet200Button" class="button">200</button>
+                <button id="hitButton" class="button">Hit</button>
+                <button id="standButton"class="button">Stand</button>
+                <button id="splitButton" class="button">Split</button>
+                <button id="doubleDownButton" class="button">Double Down</button>
+                <button id="restartButton" class="button">Play Again</button>
+            </div>
+            <div class='bet betsColumn right' id='betRight'></div>
+        </div>
 
-    <div class="winning-message" id='winningMessage'>
-        <div data-winning-message-text></div>
-    </div>
-    
-    <div class="losing-message" id='losingMessage'>
-        <div data-losing-message-text></div>
-    </div>
+        <div class='betsRow'>
+            <div class='betsColumn'></div>
+            <div class="buttonDiv betsColumn">
+                <button id="betButton" class="button">Bet</button>
+            </div>
+            <div class='betsColumn'></div>
+        </div>
 
+        <div class="winning-message" id='winningMessage'>
+            <div data-winning-message-text></div>
+        </div>
+        
+        <div class="losing-message" id='losingMessage'>
+            <div data-losing-message-text></div>
+        </div>
 
+    </div>
 </body>
 </html>
