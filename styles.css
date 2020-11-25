@@ -13,7 +13,7 @@ body {
   align-content: center;
   align-items: center;
   align-self: center;
-  background-color: rgb(27, 75, 27);
+  background-image: url(/img/background.jpg)
 }
 
 #container {

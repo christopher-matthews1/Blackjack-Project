@@ -172,7 +172,7 @@ function resetCards() {
   let x = document.getElementsByClassName("cardImage");
   //Sets the starting cards to show the card back image
   for (let i = 0; i < x.length; i++) {
-    x[i].src = "/png/back.png";
+    x[i].src = "/img/png/back.png";
   }
 }
 function resetText() {
@@ -513,7 +513,7 @@ function setRandomCard() {
   obj.newCard = getRandomCard();
 }
 function setNewCardImageSRC(newCard) {
-  return "/png/" + newCard + ".png" 
+  return "/img/png/" + newCard + ".png" 
 }
 //? GET AND SET CARD VALUES-----------------------------------------------------
 function getCardValueDigit() {
