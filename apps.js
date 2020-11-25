@@ -1,4 +1,3 @@
-// const for every card (52) or const values (13) and const suits (4)
 //? HTML IMAGE GRABS---------------------------------------------------------
 const dealersCardLeftImage = document.getElementById("dealers-card-left-image");
 const dealersCardRightImage = document.getElementById(
@@ -137,7 +136,6 @@ function startCards(who, where) {
 function insuranceCheck(newCard, who) {
   //Checks to see if the RIGHT card is an ACE
   if (newCard.slice(0, -1) === "1") {
-    //insurance();
     //Checks to see if the LEFT card is a NON-10 value card
     if (+obj.dealersCards[0].slice(0, -1) > 0) {
       //If is IS a 10, Dealer has BJ and game is over
@@ -498,7 +496,7 @@ function pushDealersNewCardToHand() {
 //? GET AND SET RANDOM CARDS----------------------------------------------------
 function getRandomCard() {
   // set a random card to newCard variable
-  const valueSet = "123K";
+  const valueSet = "1234567890JQK";
   const suitSet = "CDSH";
   const value = valueSet[Math.floor(Math.random() * valueSet.length)];
   const suit = suitSet[Math.floor(Math.random() * suitSet.length)];
@@ -673,7 +671,6 @@ function addAllPlayButtons() {
   hitButton.classList.add("show");
   standButton.classList.add("show");
   doubleDownButton.classList.add("show");
-  //splitButton.classList.add("show");
 }
 function removeAllPlayButtons() {
   hitButton.classList.remove('show');
@@ -795,12 +792,7 @@ function checkEndPlayerLeft() {
   }
 }
 function playerRightHasEqualOrOver21() {
-  //If player busts, automatically check finish without dealer flipping card.
- // if (obj.playersTotal > 21) {
-   // checkEndPlayerRight()
-   // return true;
   //If player has 21, automatically stand
-  //} else 
   if (obj.playersTotal === 21) {
     stand();
     return true;
