@@ -9,10 +9,6 @@ body {
   font-family: "Cabin", sans-serif;
   min-width: 800px;
   max-width: 1000px;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  align-self: center;
   background-image: url(/img/background.jpg)
 }
 

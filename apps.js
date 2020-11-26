@@ -172,7 +172,7 @@ function resetCards() {
   let x = document.getElementsByClassName("cardImage");
   //Sets the starting cards to show the card back image
   for (let i = 0; i < x.length; i++) {
-    x[i].src = "/img/png/back.png";
+    x[i].src = "img/png/back.png";
   }
 }
 function resetText() {
@@ -222,9 +222,9 @@ function bet200() {
   obj.betRight = 200;
   setBetButton(false);
 }
-function setBetButton(x) {
+function setBetButton(bool) {
   //Disables bet button until a bet is chosen
-  betButton.disabled = x;
+  betButton.disabled = bool;
 }
 function addBetButtons() {
   betButton.classList.add("show");
@@ -513,7 +513,7 @@ function setRandomCard() {
   obj.newCard = getRandomCard();
 }
 function setNewCardImageSRC(newCard) {
-  return "/img/png/" + newCard + ".png" 
+  return "img/png/" + newCard + ".png" 
 }
 //? GET AND SET CARD VALUES-----------------------------------------------------
 function getCardValueDigit() {
