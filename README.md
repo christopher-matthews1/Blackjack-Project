@@ -19,7 +19,8 @@ Payouts usually occur after the dealer has completed the hand. The rules by whic
 
 One such difference will be whether or not the dealer draws cards on a soft 17. Typically the dealer will draw cards until their hand value reaches 17 or higher. However, in some variants the dealer must stand on a soft 17, while in others variants, such as this one, the dealer must hit. In all Blackjack games, the dealer will hit on any hard or soft total of 16 or under.
 
-Splitting and Doubling Down
+## Splitting and Doubling Down
+
 During a game you'll also be presented with several supplementary options, depending on the initial two cards dealt to you.
 
 One such action is Splitting, which is essentially turning one hand into two, and can occur in the following ways:
@@ -39,7 +40,7 @@ A double down following a split follows the same rules as a normal double down
 Blackjack Player Decisions
 To recap, during a single round of blackjack you will be presented with a number of decisions to make (the decisions open to you depend upon the cards dealt and the game variant played), all of which will affect the result:
 
-Hit
+## Hit
 
 You can request additional cards (one at a time) to improve your hands
 
@@ -48,10 +49,10 @@ Stand
 
 If the total value of your hand is 21 or if it is lower and you decide not to risk the chance of hitting again and possibly exceeding 21, you can choose to stand
 
-Split
+## Split
 
 When your first two cards have equal value (King-Queen, Eight-Eight, etc…), you may place an additional wager (equal to the starting bet) and create a second hand to play
 
-Double Down
+## Double Down
 
 You have the option to place an additional wager equal to the starting bet. Exactly one more card is drawn to the hand and you automatically stand
