@@ -2,7 +2,7 @@
 
 This is my first project using HTML 5, CSS, and JavaScript. It took me a little under 2 weeks and 2 versions to come to my completed project. I hope you enjoy!
 
-Blackjack Rules (adapted from https://www.fulltilt.com/casino/games/blackjack/rules/?no_redirect=1)
+## Blackjack Rules (adapted from https://www.fulltilt.com/casino/games/blackjack/rules/?no_redirect=1)
 
 In general, the rules of blackjack are straightforward and can be picked up in minutes. However, each blackjack game type differs slightly in table rules, with the generic rules outlined below applying across all blackjack games.
 
