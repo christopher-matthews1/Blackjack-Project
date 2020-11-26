@@ -28,7 +28,7 @@ During a game you'll also be presented with several supplementary options, depen
 One such action is Splitting, which is essentially turning one hand into two, and can occur in the following ways:
 
 If you have two starting cards that are equal in rank (King-Queen, Eight-Eight, etc…), an additional wager equal to the starting bet can be placed and a second hand is created
-Both hands are played independently and will win, lose or push on their own merit
+Both hands are played independently and will win, lose or push on their own merit.
 
 In addition, the option to Double Down occurs in certain circumstances, permitting you the opportunity to double your initial wager. This also follows certain rules:
 
@@ -36,8 +36,8 @@ After the first two cards are dealt, you can add an additional wager equal to th
 Some blackjack game variants, such as this one, allow you to double down on any two first cards and others restrict you to doubling down on certain starting totals
 In games in which it is permitted, doubling down can occur after splitting, with a few other elements to take into account:
 
-After splitting a hand into two (or more) hands, you sometimes have the option to double down, adding another bet to the table
-A double down following a split follows the same rules as a normal double down
+After splitting a hand into two (or more) hands, you sometimes have the option to double down, adding another bet to the table.
+A double down following a split follows the same rules as a normal double down.
 
 ## Blackjack Player Decisions
 
@@ -45,18 +45,16 @@ To recap, during a single round of blackjack you will be presented with a number
 
 ### Hit
 
-You can request additional cards (one at a time) to improve your hands
-
-Cards can be drawn until the total hand value is 21 (or higher)
+You can request additional cards (one at a time) to improve your hands. Cards can be drawn until the total hand value is 21 (or higher).
 
 ### Stand
 
-If the total value of your hand is 21 or if it is lower and you decide not to risk the chance of hitting again and possibly exceeding 21, you can choose to stand
+If the total value of your hand is 21 or if it is lower and you decide not to risk the chance of hitting again and possibly exceeding 21, you can choose to stand.
 
 ### Split
 
-When your first two cards have equal value (King-Queen, Eight-Eight, etc…), you may place an additional wager (equal to the starting bet) and create a second hand to play
+When your first two cards have equal value (King-Queen, Eight-Eight, etc…), you may place an additional wager (equal to the starting bet) and create a second hand to play.
 
 ### Double Down
 
-You have the option to place an additional wager equal to the starting bet. Exactly one more card is drawn to the hand and you automatically stand
+You have the option to place an additional wager equal to the starting bet. Exactly one more card is drawn to the hand and you automatically stand.
