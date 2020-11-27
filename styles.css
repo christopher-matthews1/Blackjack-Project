@@ -9,7 +9,8 @@ body {
   font-family: "Cabin", sans-serif;
   min-width: 800px;
   max-width: 1000px;
-  background-image: url(img/background.jpg)
+  background-image: url(img/background.jpg);
+  background-size: 100% 100vh;
 }
 
 #container {
