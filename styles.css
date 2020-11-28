@@ -5,16 +5,15 @@
 }
 
 body {
-  margin: 0;
+  margin: 0px;
   font-family: "Cabin", sans-serif;
-  min-width: 800px;
-  max-width: 1000px;
   background-image: url(img/background.jpg);
   background-size: 100% 100vh;
 }
 
 #container {
   position: absolute;
+  width: 800px;
   left: 50%;
   top: 45%;
   transform: translate(-50%, -50%);
@@ -23,7 +22,7 @@ body {
 .scoreDiv {
   position: relative;
   display: grid;
-  grid-template-columns: 7rem auto 25%;
+  grid-template-columns: 15% 60% 25%;
 }
 
 .scoreText {
@@ -71,12 +70,12 @@ body {
   font-size: 2rem;
   color: white;
   align-self: center;
-  top: .2rem;
+  top: 0.2rem;
   left: 1rem;
 }
 .playersTextbox {
   display: grid;
-  grid-template-columns: minmax(26%, auto) 112px 160px 112px minmax(26%, auto);
+  grid-template-columns: 26% 14% 20% 14% 26%;
 }
 
 .playersScore {
@@ -93,7 +92,7 @@ body {
 
 .potDiv {
   display: grid;
-  grid-template-columns: minmax(360px, auto) 80px minmax(360px, auto);
+  grid-template-columns: 45% 10% 45%;
 }
 
 .potValueLeft,
@@ -173,7 +172,6 @@ body {
   display: block;
 }
 
-
 img {
   max-height: 100%;
   pointer-events: none;
@@ -210,21 +208,21 @@ img {
 }
 
 .button {
-margin: 0;
-padding: 0;
-width: 4rem;
-height: 3rem;
-align-items: center;
-justify-content: center;
-font-size: 1em;
-font-weight: bold;
+  margin: 0;
+  padding: 0;
+  width: 4rem;
+  height: 3rem;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+  font-weight: bold;
 }
 
 .buttonRow,
 .betsRow {
-display: grid;
-height: 3rem;
-grid-template-columns: minmax(264px, auto) 272px minmax(264px, auto);
+  display: grid;
+  height: 3rem;
+  grid-template-columns: 33% 34% 33%;
 }
 
 .bet {
@@ -241,11 +239,9 @@ grid-template-columns: minmax(264px, auto) 272px minmax(264px, auto);
   text-align: center;
 }
 
-
-
 #betButton,
 #restartButton {
-  width: 12rem
+  width: 12rem;
 }
 
 #backOfCard,

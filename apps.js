@@ -53,6 +53,20 @@ let obj = {
   playersSplitCards: [],
   dealersCards: []
 };
+//? SET SCREEN----------
+//setScreen()
+function setScreen() {
+  if (document.documentElement.clientWidth > 800) {
+    document
+        .querySelector("meta[name=viewport]")
+        .setAttribute('content', 'initial-scale=1', 'width=device-width');
+  }
+  else if (document.documentElement.clientWidth > 700) {
+    document
+        .querySelector("meta[name=viewport]")
+        .setAttribute('content', 'initial-scale=.9', 'width=device-width');
+};
+}
 //? LOAD GAME-----------------------------------------------------------
 loadGame();
 //? LOAD AND START GAME--------------------------------------------------------
