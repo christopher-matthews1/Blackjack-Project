@@ -68,11 +68,11 @@ function loadGame() {
   setBetButton(true)
   setScore();
   resetCards();
-  setTimeout(getSetPlayerName,100);
+  setTimeout(getSetPlayerName,500);
 }
 function getSetPlayerName() {
   if (playerText.innerHTML === "") {
-    let playerName = prompt("Enter your 3 initials","");
+    let playerName = prompt("Enter upto 3 initials","");
     if (playerName) {
       //Makes initials upper case and limits to 3
       playerName = playerName.toUpperCase();
