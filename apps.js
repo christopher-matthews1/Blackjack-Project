@@ -54,7 +54,7 @@ let obj = {
   dealersCards: []
 };
 //? SET SCREEN----------
-//setScreen()
+setScreen()
 function setScreen() {
   if (document.documentElement.clientWidth > 800) {
     document
