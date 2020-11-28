@@ -72,7 +72,7 @@ function loadGame() {
 }
 function getSetPlayerName() {
   if (playerText.innerHTML === "") {
-    let playerName = prompt("Enter upto 3 initials","");
+    let playerName = prompt("Enter up to 3 initials","");
     if (playerName) {
       //Makes initials upper case and limits to 3
       playerName = playerName.toUpperCase();
