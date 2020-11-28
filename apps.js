@@ -56,15 +56,10 @@ let obj = {
 //? SET SCREEN----------
 setScreen()
 function setScreen() {
-  if (document.documentElement.clientWidth > 800) {
+  if (document.documentElement.clientWidth < 800) {
     document
         .querySelector("meta[name=viewport]")
-        .setAttribute('content', 'initial-scale=1', 'width=device-width');
-  }
-  else if (document.documentElement.clientWidth > 700) {
-    document
-        .querySelector("meta[name=viewport]")
-        .setAttribute('content', 'initial-scale=.9', 'width=device-width');
+        .setAttribute('content', 'initial-scale=0.4', 'maximum-scale=0.4', 'width=800');
 };
 }
 //? LOAD GAME-----------------------------------------------------------
