@@ -3,13 +3,14 @@
 This is my first project using HTML 5, CSS, and JavaScript. It took me a little under 2 weeks and 2 versions to come to my completed project. I hope you enjoy!
 
 ## Blackjack Rules
+
 (adapted from https://www.fulltilt.com/casino/games/blackjack/rules/?no_redirect=1)
 
 In general, the rules of blackjack are straightforward and can be picked up in minutes. However, each blackjack game type differs slightly in table rules, with the generic rules outlined below applying across all blackjack games along with some references to the current table rules.
 
 Each round of blackjack begins with the player placing a bet. The minimum and maximum table stakes will be clearly displayed at the table, and you can choose your bet size by clicking on the denoting the value you wish to wager. After you place your wager, the dealer deals two cards face up in front of you and one card face up and one card face down to their own position.
 
-The best hand is of course "blackjack", made up of an ace and any ten (that includes jacks, queens and kings), on the initial deal (your two first cards). As a hand, it's unbeatable, and can only be tied if the dealer's hand is also blackjack or, in this varient, totals 21. It's worth noting that blackjack pays more than other winning hands as you receive three-to-two (3:2) on your wager.
+The best hand is of course "blackjack", made up of an ace and any ten (that includes jacks, queens and kings), on the initial deal (your two first cards). As a hand, it's unbeatable, and can only be tied if the dealer's hand is also blackjack or, in this variant, totals 21. It's worth noting that blackjack pays more than other winning hands as you receive three-to-two (3:2) on your wager.
 
 ## Card Values and Payouts in Blackjack
 
