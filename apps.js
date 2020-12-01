@@ -67,16 +67,12 @@ function setScreen() {
         .setAttribute('content', 'initial-scale=0.4', 'maximum-scale=0.4', 'width=800');
   }
 }
-
-
-
-
-
 //? LOAD GAME-----------------------------------------------------------------------------------------------------------
 loadGame();
 //? LOAD AND START GAME-------------------------------------------------------------------------------------------------
 function loadGame() {
   //localStorage.clear()
+  getCardBackImage()
   getLocalHighScores()
   setHighScoresHTML()
   resetVariables()
@@ -194,7 +190,7 @@ function resetCards() {
   let x = document.getElementsByClassName("cardImage");
   //Sets the starting cards to show the card back image
   for (let i = 0; i < x.length; i++) {
-    x[i].src = "img/png/back.png";
+    x[i].src = "img/png/" + obj.cardBackImage + ".png";
   }
 }
 function resetText() {
@@ -521,7 +517,7 @@ function pushDealersNewCardToHand() {
 //? GET AND SET RANDOM CARDS-----------------------------------------------------------------------------------------------
 function getRandomCard() {
   // set a random card to newCard variable
-  const valueSet = "12K";
+  const valueSet = "1234567890JQK";
   const suitSet = "CDSH";
   const value = valueSet[Math.floor(Math.random() * valueSet.length)];
   const suit = suitSet[Math.floor(Math.random() * suitSet.length)];
@@ -778,9 +774,36 @@ function sortHighScores(playerName, playerScore) {
 function resetHighScores() {
   let reset = prompt("Type 'RESET' to reset the high scores list.");
   if (reset === "RESET") {
-    localStorage.clear()
+    localStorage.removeItem("High Scores")
     pageReload();
   }
+}
+//? DECK STYLE OPTIONS-----------------------------------------------------------------------------------------------------
+function getCardBackImage() {
+  //If High scores array is not created, create it
+  if (localStorage.getItem("Card Back Image") === null) {
+    obj.cardBackImage = 'back';
+    //If is it, populate it with the current high scores.
+  } else {
+    obj.cardBackImage = localStorage.getItem("Card Back Image");
+  }
+}
+function setCardBackImage() {
+  localStorage.removeItem("Card Back Image");
+  localStorage.setItem("Card Back Image", obj.cardBackImage)
+  loadGame();
+}
+function blueCardBackImage() {
+  obj.cardBackImage = "blueback"
+  setCardBackImage();
+}
+function defaultCardBackImage() {
+  obj.cardBackImage = "back"
+  setCardBackImage();
+}
+function redCardBackImage() {
+  obj.cardBackImage = "redback"
+  setCardBackImage();
 }
 //? CHECK FINISHES---------------------------------------------------------------------------------------------------------
 function checkFinishRight(p, d) {

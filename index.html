@@ -19,7 +19,14 @@
                         <div class="dropdown-content">
                             <a onclick="pageReload()" href="">Change Player</a>
                             <a onclick="resetHighScores()" href="#">Reset High Scores</a>
-                            <a href="#">Link 3</a>
+                            <div class="decks">
+                                <a href="#">Choose Deck Style</a>
+                                <div class="decksImages"> 
+                                    <a style="background-image: url(img/png/back.png)" onclick="defaultCardBackImage()" href="#"> </a>
+                                    <a style="background-image: url(img/png/redback.png)" onclick="redCardBackImage()" href="#"> </a>
+                                    <a style="background-image: url(img/png/blueback.png)" onclick="blueCardBackImage()" href="#"> </a>
+                                </div>
+                            </div>                            
                         </div>
                 </div>
                 <li><a href="https://github.com/christopher-matthews1/Blackjack-Project" target="_blank"><i class="fas fa-link"></i>GitHub Repo</a></li>

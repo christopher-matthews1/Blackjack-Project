@@ -80,6 +80,7 @@ body {
   color: black;
   padding: 10px 16px;
   text-decoration: none;
+  border-radius: 5px;
   display: block;
   text-align: left;
 }
@@ -87,12 +88,28 @@ body {
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
   background-color: #f1f1f1;
-  border-radius: 5px;
 }
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
   top: 90%;
+  display: block;
+}
+
+.decksImages {
+  display: none;
+  position: absolute;
+  border-radius: 5px;
+  min-width: 100px;
+  left: 100%;
+  top: 66.6%;
+}
+
+.decksImages a {
+  padding: 20px;
+}
+
+.decks:hover .decksImages {
   display: block;
 }
 
