@@ -83,7 +83,7 @@ function loadGame() {
   setBetButton(true)
   setScore();
   resetCards();
-  setTimeout(getSetPlayerName,500);
+  setTimeout(getSetPlayerName,1000);
 }
 function pageReload() {
   location.reload();
