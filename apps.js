@@ -805,6 +805,22 @@ function redCardBackImage() {
   obj.cardBackImage = "redback"
   setCardBackImage();
 }
+function rainbowCardBackImage() {
+  obj.cardBackImage = "rainbowback"
+  setCardBackImage();
+}
+function mountainCardBackImage() {
+  obj.cardBackImage = "mountainback"
+  setCardBackImage();
+}
+function newYorkCardBackImage() {
+  obj.cardBackImage = "newyorkback"
+  setCardBackImage();
+}
+function waterfallCardBackImage() {
+  obj.cardBackImage = "waterfallback"
+  setCardBackImage();
+}
 //? CHECK FINISHES---------------------------------------------------------------------------------------------------------
 function checkFinishRight(p, d) {
   if (lostRight(p, d)) {

@@ -107,6 +107,7 @@ body {
 
 .decksImages a {
   padding: 20px;
+  background-position: center center;
 }
 
 .decks:hover .decksImages {
@@ -141,12 +142,14 @@ body {
   height: 4rem;
   line-height: 1.15;
   color: rgb(255, 255, 255);
+  user-select: none;
 }
 
 .dealersText {
   position: relative;
   height: 5rem;
   font-size: 50px;
+  font-weight: bold;
   color: black;
   display: grid;
   justify-content: center;
@@ -160,6 +163,7 @@ body {
   position: relative;
   content: attr(data-value);
   font-size: 2rem;
+  font-weight: normal;
   color: white;
   align-self: center;
   top: 0.2rem;
