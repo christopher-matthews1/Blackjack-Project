@@ -6,10 +6,25 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Cabin&display=swap" rel="stylesheet">
     <script src="apps.js" defer></script>
+    <script src="https://kit.fontawesome.com/26f81fdf83.js" crossorigin="anonymous"></script>
     <title>Blackjack</title>
 </head>
 <body>
     <div id='container'>
+        <div class='nav'>
+            <ul>
+                <li><a href="https://github.com/christopher-matthews1/Blackjack-Project/blob/master/README.md" target="_blank"><i class="far fa-question-circle"></i>Help</a></li>
+                <div class="dropdown">
+                    <li class="dropdownBtn"><a href="#settings"><i class="fas fa-cog"></i>Settings</a></li>
+                        <div class="dropdown-content">
+                            <a onclick="pageReload()" href="">Change Player</a>
+                            <a onclick="resetHighScores()" href="#">Reset High Scores</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                </div>
+                <li><a href="https://github.com/christopher-matthews1/Blackjack-Project" target="_blank"><i class="fas fa-link"></i>GitHub Repo</a></li>
+            </ul>
+        </div>
         <div class='scoreDiv'>
             <div class='scoreText'>Score:</div>
             <div class='score' id='score'></div>
@@ -18,12 +33,12 @@
         <div class="dealersText" id="dealersText" data-value="">Dealer</div>
     
         <div class="dealersHand" id="dealers-hand">
-            <div class="card" id='dealers-card-left'>
+            <div class="dCard" id='dealers-card-left'>
                 <img class="cardImage" id='backOfCard' src="">
                 <img class="cardImage" id='dealers-card-left-image' src="">
             </div>
             <div class="gapD" id="gapD"></div>
-            <div class="card" id='dealers-card-right'>
+            <div class="dCard" id='dealers-card-right'>
                 <img class="cardImage" id='dealers-card-right-image' src="">
             </div>
         </div>
@@ -33,11 +48,11 @@
             <div class="pot potValueRight" id="potValueRight"></div>
         </div>
         <div class="playersHand" id="players-hand">
-            <div class="card" id="players-card-left">
+            <div class="pCard" id="players-card-left">
                 <img class="cardImage" id='players-card-left-image' src="">
             </div>
             <div class="gapP" id="gapP"></div>
-            <div class="card" id="players-card-right">
+            <div class="pCard" id="players-card-right">
                 <img class="cardImage" id='players-card-right-image'src="">
             </div>
         </div>

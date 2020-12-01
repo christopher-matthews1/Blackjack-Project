@@ -1,4 +1,4 @@
-//? HTML IMAGE GRABS---------------------------------------------------------
+//? HTML IMAGE GRABS--------------------------------------------------------------------------------------------------------------
 const dealersCardLeftImage = document.getElementById("dealers-card-left-image");
 const dealersCardRightImage = document.getElementById(
   "dealers-card-right-image"
@@ -7,7 +7,7 @@ const playersCardLeftImage = document.getElementById("players-card-left-image");
 const playersCardRightImage = document.getElementById(
   "players-card-right-image"
 );
-//? HTML DIV GRABS -----------------------------------------------------------
+//? HTML DIV GRABS ---------------------------------------------------------------------------------------------------------------
 const playersHand = document.getElementById("players-hand");
 const dealersHand = document.getElementById("dealers-hand");
 const playerText = document.getElementById("playersText");
@@ -26,7 +26,7 @@ const highScores = document.getElementById("highScores");
 const potLeft = document.getElementById("potValueLeft");
 const potRight = document.getElementById("potValueRight");
 const gapP = document.getElementById("gapP");
-//? BUTTON LINKS-----------------------------------------------------------
+//? BUTTON LINKS--------------------------------------------------------------------------------------------------------------
 const restartButton = document.getElementById("restartButton");
 const hitButton = document.getElementById("hitButton");
 const standButton = document.getElementById("standButton");
@@ -36,7 +36,7 @@ const bet50Button = document.getElementById("bet50Button");
 const bet100Button = document.getElementById("bet100Button");
 const bet200Button = document.getElementById("bet200Button");
 const doubleDownButton = document.getElementById("doubleDownButton");
-//? EVENT LISTENERS--------------------------------------------------------
+//? EVENT LISTENERS----------------------------------------------------------------------------------------------------------
 restartButton.addEventListener("click", loadGame);
 hitButton.addEventListener("click", hit);
 standButton.addEventListener("click", stand);
@@ -46,14 +46,14 @@ bet50Button.addEventListener("click", bet50);
 bet100Button.addEventListener("click", bet100);
 bet200Button.addEventListener("click", bet200);
 doubleDownButton.addEventListener("click", doubleDown);
-//? GLOBAL OBJECT--------------------------------------------------------
+//? GLOBAL OBJECT------------------------------------------------------------------------------------------------------------
 let obj = {
   currentCards: [],
   playersCards: [],
   playersSplitCards: [],
   dealersCards: []
 };
-//? SET SCREEN----------
+//? SET SCREEN-------------------------------------------------------------------------------------------------------------
 setScreen()
 function setScreen() {
   if (document.documentElement.clientWidth < 800) {
@@ -67,9 +67,14 @@ function setScreen() {
         .setAttribute('content', 'initial-scale=0.4', 'maximum-scale=0.4', 'width=800');
   }
 }
-//? LOAD GAME-----------------------------------------------------------
+
+
+
+
+
+//? LOAD GAME-----------------------------------------------------------------------------------------------------------
 loadGame();
-//? LOAD AND START GAME--------------------------------------------------------
+//? LOAD AND START GAME-------------------------------------------------------------------------------------------------
 function loadGame() {
   //localStorage.clear()
   getLocalHighScores()
@@ -84,9 +89,12 @@ function loadGame() {
   resetCards();
   setTimeout(getSetPlayerName,500);
 }
+function pageReload() {
+  location.reload();
+}
 function getSetPlayerName() {
   if (playerText.innerHTML === "") {
-    let playerName = prompt("Enter up to 3 initials","");
+    let playerName = prompt("Enter up to 3 initials.","");
     if (playerName) {
       //Makes initials upper case and limits to 3
       playerName = playerName.toUpperCase();
@@ -174,7 +182,7 @@ function checkForSplit() {
     splitButton.classList.add("show");
   }
 }
-//? RESET ALL VARIABLES/TEXTS------------------------------------------------
+//? RESET ALL VARIABLES/TEXTS-------------------------------------------------------------------------------------------
 function setScore() {
   if (score.innerText === "") {
     score.innerText = 2000;
@@ -220,7 +228,7 @@ function removeBetText() {
   betRight.innerText = "";
   betLeft.innerText = "";
 }
-//? BETS/POT-------------------------------------------------------------------
+//? BETS/POT--------------------------------------------------------------------------------------------------------------
 function bet50() {
   betRight.innerText = 50;
   obj.betRight = 50;
@@ -277,7 +285,7 @@ function addDoubleDownToPot() {
     potRight.innerText = +potRight.innerText + obj.betRight;
   }
 }
-//? HIT/STAND-----------------------------------------------------------------
+//? HIT/STAND------------------------------------------------------------------------------------------------------------
 function hit() {
   if(hitSplitLeft()){
     return;
@@ -325,7 +333,7 @@ function stand() {
     buttonDelay();
   }
 }
-//? SPLIT--------------------------------------------------------------------
+//? SPLIT---------------------------------------------------------------------------------------------------------------
 function split() {
   obj.split = 1;
   //Add split bet to pot
@@ -349,7 +357,7 @@ function hitSplitLeft() {
     //After first hit, split the 'last hit' card in half when a new one is drawn
     if (obj.hit === 1) {
       obj.playersSplitCardDivHTML = document.getElementById("players-new-card");
-      obj.playersSplitCardDivHTML.classList.add("splitCardImage");
+      obj.playersSplitCardDivHTML.classList.add("splitCardImage", "noGap");
       obj.playersSplitCardDivHTML.removeAttribute("id");
       if (obj.doubleDown === 0) {
         doubleDownButton.classList.remove('show');
@@ -361,7 +369,7 @@ function hitSplitLeft() {
     //Insert the new SPLIT card to the left of the "GAP"
     playersHand.insertBefore(obj.playersNewCardDivHTML, gapP);
     //Cuts the card left of the new card in half
-    playersCardLeft.classList.add("splitCardImage");
+    playersCardLeft.classList.add("splitCardImage", "noGap");
     //Append Image to Div
     obj.playersNewCardDivHTML.appendChild(obj.playersNewCardImageHTML);
     //Finds random card and sets it to the image
@@ -388,11 +396,11 @@ function hitSplitRight() {
     obj.playersSplitCardDivHTML = document.getElementById("players-new-card");
     //After first hit, split the 'last hit' card in half when a new one is drawn
     if(obj.hit === 1) {
-      obj.playersSplitCardDivHTML.classList.add("splitCardImage");
+      obj.playersSplitCardDivHTML.classList.add("splitCardImage", "noGap");
     }
     obj.hit = 1;
     obj.playersSplitCardDivHTML.removeAttribute("id");
-    playersCardRight.classList.add("splitCardImage");
+    playersCardRight.classList.add("splitCardImage", "noGap");
   }
 }
 function splitPlayerTotal() {
@@ -413,7 +421,7 @@ function checkSplitDoubleBust() {
     }
   }
 }
-//? DOUBLEDOWN----------------------------------------------------------------
+//? DOUBLEDOWN-----------------------------------------------------------------------------------------------------------
 function doubleDown() {
   subtractBetFromScore();
   console.log('Score After DD:'+score.innerText)
@@ -443,7 +451,7 @@ function doubleDownRight() {
     setTimeout(stand, 500)
   }
 }
-//? DEALER TURN--------------------------------------------------------------
+//? DEALER TURN---------------------------------------------------------------------------------------------------------
 function AddFacedownCardToTotal() {
   //Adds value of Dealers facedown card to total, checking for ace
   obj.newCardValue = obj.dealersCards[0].slice(0, -1);
@@ -461,10 +469,13 @@ function dealersHit() {
   checkForAce(obj.dealersCards, "dealers");
   checkEndPlayerRight();
 }
-//? CREATE PLAYERS NEW CARDS----------------------------------------------------
+//? CREATE PLAYERS NEW CARDS-----------------------------------------------------------------------------------------------
 function createPlayersNewCardDivHTML() {
   obj.playersNewCardDivHTML = document.createElement("div");
-  obj.playersNewCardDivHTML.classList.add("card", "newCard");
+  obj.playersNewCardDivHTML.classList.add("pCard", "newCard");
+  if (obj.split > 0) {
+    obj.playersNewCardDivHTML.classList.add("noGap");
+  }
   obj.playersNewCardDivHTML.id = "players-new-card";
 }
 function createPlayersNewCardImageHTML() {
@@ -484,10 +495,10 @@ function createPlayersNewCard() {
 function pushPlayersNewCardToHand() {
   obj.playersCards.push(obj.newCard);
 }
-//? CREATE DEALERS NEW CARDS----------------------------------------------------
+//? CREATE DEALERS NEW CARDS-----------------------------------------------------------------------------------------------
 function createDealersNewCardDivHTML() {
   obj.dealersNewCard = document.createElement("div");
-  obj.dealersNewCard.classList.add("card", "newCard");
+  obj.dealersNewCard.classList.add("dCard", "newCard");
   obj.dealersNewCard.id = "dealers-new-card";
 }
 function createDealersNewCardImageHTML() {
@@ -507,10 +518,10 @@ function createDealersNewCard() {
 function pushDealersNewCardToHand() {
   obj.dealersCards.push(obj.newCard);
 }
-//? GET AND SET RANDOM CARDS----------------------------------------------------
+//? GET AND SET RANDOM CARDS-----------------------------------------------------------------------------------------------
 function getRandomCard() {
   // set a random card to newCard variable
-  const valueSet = "1234567890JQK";
+  const valueSet = "12K";
   const suitSet = "CDSH";
   const value = valueSet[Math.floor(Math.random() * valueSet.length)];
   const suit = suitSet[Math.floor(Math.random() * suitSet.length)];
@@ -529,7 +540,7 @@ function setRandomCard() {
 function setNewCardImageSRC(newCard) {
   return "img/png/" + newCard + ".png" 
 }
-//? GET AND SET CARD VALUES-----------------------------------------------------
+//? GET AND SET CARD VALUES------------------------------------------------------------------------------------------------
 function getCardValueDigit() {
   obj.newCardValue = obj.newCard.slice(0, -1);
 }
@@ -559,7 +570,7 @@ function setSplitCardValue(newCardValue, who) {
     return (obj.dealersTotal += 10);
   }
 }
-//? CHECK/UPDATE TOTALS---------------------------------------------------------
+//? CHECK/UPDATE TOTALS----------------------------------------------------------------------------------------------------
 function checkForAce(arr, who) {
   let regex = RegExp("1");
   for (let i = 0; i < arr.length; i++) {
@@ -661,7 +672,7 @@ function updateTotalText(who) {
 function updateSplitTotalText() {
     scoreLeft.innerText = obj.playersSplitTotal;
 }
-//? BUTTON/ETC: SHOW/HIDE/REMOVE/ETC------------------------------------------------
+//? BUTTON/ETC: SHOW/HIDE/REMOVE/ETC-------------------------------------------------------------------------------------------
 function buttonDelay() {
   //Delays the buttons so a double click doesn't happen
   standButton.disabled = true;
@@ -701,10 +712,10 @@ function addBackOfCard() {
 function refreshStartOfGame() {
   gapP.classList.remove("show");
   restartButton.classList.remove("show");
-  playersCardLeft.classList.remove("splitCardImage");
-  playersCardRight.classList.remove("splitCardImage");
+  playersCardLeft.classList.remove("splitCardImage", "noGap");
+  playersCardRight.classList.remove("splitCardImage", "noGap");
 }
-//? HIGH SCORES-----------------------------------------------------------------
+//? HIGH SCORES------------------------------------------------------------------------------------------------------------
 function setHighScoresHTML() {
   //Check to see if there is even a high score list
   if(obj.highScores) {
@@ -764,7 +775,14 @@ function sortHighScores(playerName, playerScore) {
     obj.highScores.splice((indexOfScoreGreater), 0, (playerName + ": " + playerScore));
   }
 }
-//? CHECK FINISHES--------------------------------------------------------------
+function resetHighScores() {
+  let reset = prompt("Type 'RESET' to reset the high scores list.");
+  if (reset === "RESET") {
+    localStorage.clear()
+    pageReload();
+  }
+}
+//? CHECK FINISHES---------------------------------------------------------------------------------------------------------
 function checkFinishRight(p, d) {
   if (lostRight(p, d)) {
     return;
@@ -819,7 +837,7 @@ function playerLeftHasEqualOrOver21() {
     return true;
   }
 }
-//? FINISH OPTIONS--------------------------------------------------------------
+//? FINISH OPTIONS---------------------------------------------------------------------------------------------------------
 function lostRight(p, d) {
   if (checkLostCondition(p, d)) {
     if (obj.endRight === 0) {
@@ -910,7 +928,7 @@ function pushLeft(p, d) {
     return true;
   }
 }
-//? CHECK FINISH CONDITIONS-----------------------------------------------------
+//? CHECK FINISH CONDITIONS------------------------------------------------------------------------------------------------
 function checkLostCondition(p, d) {
   //If Player is Bust
   if (p > 21) {
@@ -1046,7 +1064,7 @@ function checkPushCondition(p, d) {
   }
   return false;
 }
-//? END GAME BET WINNING AND TEXT UPDATES
+//? END GAME BET WINNING AND TEXT UPDATES----------------------------------------------------------------------------------
 function splitRightLoss() {
   console.log('RightLoss: '+score.innerText)
   scoreRight.innerText = obj.playersTotal;
