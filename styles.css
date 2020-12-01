@@ -216,8 +216,7 @@ img {
   justify-content: center;
   font-size: 1em;
   font-weight: bold;
-  outline: none;
-  border-radius: 5px;
+  border-radius: none;
 }
 
 .button:hover:enabled {
