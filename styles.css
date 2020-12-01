@@ -221,7 +221,6 @@ img {
 }
 
 .button:hover:enabled {
-  background-color: rgb(197, 196, 196);
   cursor: pointer;
 }
 
