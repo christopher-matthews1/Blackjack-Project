@@ -216,6 +216,13 @@ img {
   justify-content: center;
   font-size: 1em;
   font-weight: bold;
+  outline: none;
+  border-radius: 5px;
+}
+
+.button:hover:enabled {
+  background-color: rgb(197, 196, 196);
+  cursor: pointer;
 }
 
 .buttonRow,
