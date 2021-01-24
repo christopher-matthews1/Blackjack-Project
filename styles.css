@@ -283,6 +283,7 @@ img {
   border-radius: 5%;
   background: white;
   overflow: hidden;
+  box-shadow: 2px 2px 2px black;
 }
 
 .pCard.noGap {
